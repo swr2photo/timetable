@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตารางเรียน</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<button class="add-course-btn" onclick="openPopup()">เพิ่มรายวิชา</button>
+
+<div id="overlay"></div>
+<div id="popupForm">
+    <h2>เพิ่มรายวิชา</h2>
+    <div>
+        <label>รหัสวิชา:</label>
+        <input type="text" id="courseCode" oninput="formatCourseCode(); clearErrors()" maxlength="7" placeholder="เช่น 333-214">
+        <div class="error-message" id="courseCodeError"></div>
+    </div>
+    <div>
+        <label>ชื่อรายวิชา:</label>
+        <input type="text" id="courseName" oninput="clearErrors()" placeholder="ชื่อรายวิชา">
+        <div class="error-message" id="courseNameError"></div>
+    </div>
+    <div>
+        <label>ชื่ออาจารย์:</label>
+        <input type="text" id="instructorName" oninput="clearErrors()" placeholder="ชื่ออาจารย์">
+        <div class="error-message" id="instructorNameError"></div>
+    </div>
+    <div>
+        <label>ห้องเรียน:</label>
+        <input type="text" id="classroom" oninput="clearErrors()" placeholder="เช่น ห้อง 101">
+        <div class="error-message" id="classroomError"></div>
+    </div>
+    <div>
+        <label>วันเรียน:</label>
+        <div>
+            <button type="button" class="day-button" onclick="toggleDay(this, 'จันทร์')">จ.</button>
+            <button type="button" class="day-button" onclick="toggleDay(this, 'อังคาร')">อ.</button>
+            <button type="button" class="day-button" onclick="toggleDay(this, 'พุธ')">พ.</button>
+            <button type="button" class="day-button" onclick="toggleDay(this, 'พฤหัส')">พ.</button>
+            <button type="button" class="day-button" onclick="toggleDay(this, 'ศุกร์')">ศ.</button>
+        </div>
+        <div class="error-message" id="daysError"></div>
+    </div>
+
+    <!-- เวลาเรียน -->
+    <div id="timeInputsContainer" style="display: none;">
+        <h3>เวลาเรียน</h3>
+        <div id="timeInputs"></div>
+    </div>
+
+    <div class="button-group">
+        <button onclick="addCourse()">เพิ่ม</button>
+        <button onclick="closePopup()">ปิด</button>
+    </div>
+</div>
+
+<table id="scheduleTable">
+    <thead>
+        <tr>
+            <th>วัน/เวลา</th>
+            <th>8:00</th>
+            <th>9:00</th>
+            <th>10:00</th>
+            <th>11:00</th>
+            <th>12:00</th>
+            <th>13:00</th>
+            <th>14:00</th>
+            <th>15:00</th>
+            <th>16:00</th>
+            <th>17:00</th>
+            <th>18:00</th>
+            <th>19:00</th>
+            <th>20:00</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>จันทร์</td>
+            <td id="mon-8"></td>
+            <td id="mon-9"></td>
+            <td id="mon-10"></td>
+            <td id="mon-11"></td>
+            <td id="mon-12"></td>
+            <td id="mon-13"></td>
+            <td id="mon-14"></td>
+            <td id="mon-15"></td>
+            <td id="mon-16"></td>
+            <td id="mon-17"></td>
+            <td id="mon-18"></td>
+            <td id="mon-19"></td>
+            <td id="mon-20"></td>
+        </tr>
+        <tr>
+            <td>อังคาร</td>
+            <td id="tue-8"></td>
+            <td id="tue-9"></td>
+            <td id="tue-10"></td>
+            <td id="tue-11"></td>
+            <td id="tue-12"></td>
+            <td id="tue-13"></td>
+            <td id="tue-14"></td>
+            <td id="tue-15"></td>
+            <td id="tue-16"></td>
+            <td id="tue-17"></td>
+            <td id="tue-18"></td>
+            <td id="tue-19"></td>
+            <td id="tue-20"></td>
+        </tr>
+        <tr>
+            <td>พุธ</td>
+            <td id="wed-8"></td>
+            <td id="wed-9"></td>
+            <td id="wed-10"></td>
+            <td id="wed-11"></td>
+            <td id="wed-12"></td>
+            <td id="wed-13"></td>
+            <td id="wed-14"></td>
+            <td id="wed-15"></td>
+            <td id="wed-16"></td>
+            <td id="wed-17"></td>
+            <td id="wed-18"></td>
+            <td id="wed-19"></td>
+            <td id="wed-20"></td>
+        </tr>
+        <tr>
+            <td>พฤหัสบดี</td>
+            <td id="thu-8"></td>
+            <td id="thu-9"></td>
+            <td id="thu-10"></td>
+            <td id="thu-11"></td>
+            <td id="thu-12"></td>
+            <td id="thu-13"></td>
+            <td id="thu-14"></td>
+            <td id="thu-15"></td>
+            <td id="thu-16"></td>
+            <td id="thu-17"></td>
+            <td id="thu-18"></td>
+            <td id="thu-19"></td>
+            <td id="thu-20"></td>
+        </tr>
+        <tr>
+            <td>ศุกร์</td>
+            <td id="fri-8"></td>
+            <td id="fri-9"></td>
+            <td id="fri-10"></td>
+            <td id="fri-11"></td>
+            <td id="fri-12"></td>
+            <td id="fri-13"></td>
+            <td id="fri-14"></td>
+            <td id="fri-15"></td>
+            <td id="fri-16"></td>
+            <td id="fri-17"></td>
+            <td id="fri-18"></td>
+            <td id="fri-19"></td>
+            <td id="fri-20"></td>
+        </tr>
+    </tbody>
+</table>
+
+<script src="JS/script.js"></script>
+</body>
+</html>
