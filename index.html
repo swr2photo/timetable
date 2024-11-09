@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ตารางเรียน</title>
     <link rel="stylesheet" href="css/style.css">
+    <!-- Link to Bootstrap 5 CSS -->
 </head>
 <body>
-
 <button class="add-course-btn" onclick="openPopup()">เพิ่มรายวิชา</button>
 
 <div id="overlay"></div>
@@ -15,9 +15,10 @@
     <h2>เพิ่มรายวิชา</h2>
     <div>
         <label>รหัสวิชา:</label>
-        <input type="text" id="courseCode" oninput="formatCourseCode(); clearErrors()" maxlength="7" placeholder="เช่น 333-214">
+        <input type="text" id="courseCode" oninput="formatCourseCode();" maxlength="9" placeholder="เช่น 333-214" pattern="^[A-Za-z0-9]{6,9}$" inputmode="text" />
         <div class="error-message" id="courseCodeError"></div>
     </div>
+       
     <div>
         <label>ชื่อรายวิชา:</label>
         <input type="text" id="courseName" oninput="clearErrors()" placeholder="ชื่อรายวิชา">
