@@ -7,6 +7,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh;
 }
 
 /* ปุ่มเพิ่มรายวิชา */
@@ -15,11 +16,11 @@ body {
     color: white;
     border: none;
     padding: 12px 20px;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     width: 100%;
     max-width: 300px;
@@ -50,14 +51,14 @@ body {
     transform: translate(-50%, -50%);
     background: #ffffff;
     padding: 30px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     z-index: 20;
     width: 90%;
     max-width: 400px;
     max-height: 85vh;
     overflow-y: auto;
     border-radius: 10px;
-    animation: fadeIn 0.5s;
+    animation: fadeIn 0.5s ease-in-out;
     text-align: center;
 }
 
@@ -84,16 +85,17 @@ label {
 input[type="text"],
 select {
     width: 100%;
-    padding: 10px;
+    padding: 12px 15px;
     margin-bottom: 15px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .input-error {
     border-color: red;
+    background-color: #fff1f1;
 }
 
 .error-message {
@@ -131,7 +133,7 @@ select {
 
 /* ตั้งค่า container ของตาราง */
 #scheduleTableContainer {
-    width: 100vw;
+    width: 100%;
     overflow-x: auto;
     padding: 10px;
     box-sizing: border-box;
@@ -140,7 +142,6 @@ select {
 /* ปรับตารางให้มีขนาดคอลัมน์เท่ากัน */
 #scheduleTable {
     width: 100%;
-    max-width: 100vw;
     table-layout: fixed;
     border-collapse: collapse;
     background-color: #ffffff;
@@ -154,11 +155,11 @@ select {
 
 #scheduleTable th,
 #scheduleTable td {
-    padding: 10px;
+    padding: 12px;
     text-align: center;
     border: 1px solid #ddd;
-    font-size: 14px;
-    min-width: 100px;
+    font-size: 16px;
+    min-width: 120px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -169,25 +170,51 @@ select {
     color: #ffffff;
     font-weight: bold;
     text-transform: uppercase;
-    text-align: center;
 }
 
 #scheduleTable tr {
-    height: 50px;
-}
-
-#scheduleTable th,
-#scheduleTable td {
-    line-height: 50px;
+    height: 60px;
 }
 
 /* กำหนดการตอบสนองในมือถือหรือแท็บเล็ต */
 @media (max-width: 768px) {
-    /* ปรับขนาดตามที่จำเป็น */
+    .add-course-btn {
+        max-width: 250px;
+    }
+    
+    #scheduleTable {
+        font-size: 14px;
+    }
 }
 
 @media (max-width: 480px) {
-    /* ปรับขนาดตามที่จำเป็น */
+    .navbar {
+        flex-direction: column;
+    }
+
+    .navbar-nav {
+        display: none;
+    }
+
+    .navbar-toggler {
+        display: flex;
+    }
+
+    .navbar-collapse.show {
+        display: block;
+        width: 100%;
+    }
+
+    .navbar-nav .nav-item {
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 1rem;
+        color: #007bff;
+    }
 }
 
 /* ปุ่มเลือกวันในป๊อปอัพ */
@@ -271,47 +298,36 @@ select {
     width: 48%;
 }
 
-/* สไตล์สำหรับกรอบสีแดง */
+/* ป้ายข้อความผิดพลาดใต้ฟิลด์ */
 .error-border {
     border: 2px solid red;
 }
 
-.input-error {
-    border-color: red !important;
-    background-color: #fff1f1 !important;
-}
-
-.error-message {
-    color: red;
-    font-size: 12px;
-    margin-top: -10px;
-    margin-bottom: 15px;
-    text-align: left;
-}
-
 /* สไตล์ Scrollbar สำหรับ Chrome, Edge และ Safari */
 ::-webkit-scrollbar {
-    width: 12px;               /* ความกว้างของแถบเลื่อน */
+    width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #e0e0e0;       /* พื้นหลังของแถบเลื่อน (สีเทาอ่อน) */
-    border-radius: 10px;       /* มุมโค้ง */
+    background: #e0e0e0;
+    border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #ffffff; /* สีของ Thumb (สีขาว) */
-    border-radius: 10px;       /* มุมโค้งของ Thumb */
-    border: 3px solid #e0e0e0; /* ระยะห่างระหว่าง Thumb กับขอบ */
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 3px solid #e0e0e0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #cccccc; /* สี Thumb เมื่อ Hover (สีเทาเข้มขึ้น) */
+    background-color: #cccccc;
 }
 
 /* สไตล์ Scrollbar สำหรับ Firefox */
 * {
-    scrollbar-width: thin;            /* กำหนดขนาดเป็น thin */
-    scrollbar-color: #ffffff #e0e0e0; /* สีของ Thumb (สีขาว) และ Track (สีเทาอ่อน) */
+    scrollbar-width: thin;
+    scrollbar-color: #ffffff #e0e0e0;
 }
+
+
 
